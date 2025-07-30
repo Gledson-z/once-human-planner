@@ -1,0 +1,10 @@
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+
+# Pastas de dependências (que a gente pode usar no futuro)
+node_modules/
+
+# Logs e arquivos temporários
+*.log
+*.tmp
