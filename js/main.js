@@ -1,23 +1,27 @@
-// Passo 1: Capturar nosso "outdoor" pelo ID que demos a ele.
+// Capturar o container
 const containerDeArmas = document.getElementById('lista-de-armas');
 
+// Limpar o container antes de adicionar coisas novas (boa prática!)
+containerDeArmas.innerHTML = '';
 
-// Passo 2: Fazer um loop, ou seja, passar por CADA item da nossa lista "armas".
-// (mesmo que por enquanto só tenha um item, isso já prepara pro futuro)
+// Loop em cada arma
 for (const arma of armas) {
 
-  // Passo 3: Para cada arma, vamos criar um bloco de HTML em formato de texto.
-  // Usamos a crase (`) para conseguir colocar as variáveis (${...}) dentro do texto.
+  // Cria o card com os CAMINHOS para os dados
   const cardDaArma = `
     <div class="card-arma">
-      <h2>${arma.nome}</h2>
+      <h2>${arma.nome} (${arma.raridade})</h2>
       <p><strong>Tipo:</strong> ${arma.tipo}</p>
-      <p><strong>Munição:</strong> ${arma.municao}</p>
-      <p><strong>Dano Base:</strong> ${arma.dano_base}</p>
-      <p><strong>Raridade:</strong> ${arma.raridade}</p>
+      <p><strong>Dano:</strong> ${arma.status_base.dano}</p>
+      <p><strong>Cadência:</strong> ${arma.status_base.cadencia}</p>
+      <p><strong>Carregador:</strong> ${arma.status_base.carregador} balas</p>
+      <hr>
+      <p><strong>Dano Crítico:</strong> +${arma.atributos_primarios.dano_critico}%</p>
+      <p><strong>Taxa Crítica:</strong> ${arma.atributos_primarios.taxa_critico}%</p>
+      <p><strong>Dano Ponto Fraco:</strong> +${arma.atributos_primarios.dano_ponto_fraco}%</p>
     </div>
   `;
 
-  // Passo 4: Inserir o bloco de HTML que a gente acabou de criar DENTRO do nosso "outdoor".
+  // Inserir o card no container
   containerDeArmas.innerHTML += cardDaArma;
 }
