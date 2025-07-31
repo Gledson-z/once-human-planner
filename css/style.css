@@ -8,7 +8,18 @@ body {
 
 h1 {
   color: #61dafb;
-  /* Uma corzinha meio tech */
+}
+
+/* Estilos para o nosso container */
+#lista-de-armas {
+  display: flex;
+  /* Transforma o container numa "bandeja flexível". */
+  flex-wrap: wrap;
+  /* Permite que os cards quebrem para a linha de baixo se não couberem. */
+  justify-content: center;
+  /* Centraliza os cards na bandeja. */
+  padding: 16px;
+  /* Um respiro nas laterais */
 }
 
 .card-arma {
@@ -16,9 +27,11 @@ h1 {
   border: 1px solid #555;
   border-radius: 8px;
   padding: 16px;
-  margin: 16px auto;
-  /* auto nas laterais para centralizar */
+  margin: 16px;
+  /* Margem ajustada para dar espaço em TODAS as direções. */
   width: 300px;
+  text-align: left;
+  /* Alinha o texto do card à esquerda pra ficar mais legível. */
 }
 
 .card-arma h2 {
