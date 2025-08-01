@@ -5,6 +5,6 @@ Thumbs.db
 # Pastas de dependências (que a gente pode usar no futuro)
 node_modules/
 
-# Logs e arquivos temporários
+# Logs e arquivos temporários 
 *.log
 *.tmp
