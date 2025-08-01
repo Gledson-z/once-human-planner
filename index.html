@@ -10,12 +10,23 @@
 </head>
 
 <body>
+  <header>
+    <h1>Once Human Build Planner</h1>
+  </header>
 
-  <h1>Once Human Build Planner</h1>
-  <p>O arsenal está sendo preparado...</p>
+  <nav class="menu-categorias">
+    <a href="#" class="aba ativa">Arma Primária</a>
+    <a href="#" class="aba">Arma Secundária</a>
+    <a href="#" class="aba">Corpo a Corpo</a>
+    <a href="#" class="aba">Armadura</a>
+  </nav>
 
-  <div id="lista-de-armas">
+  <div class="area-controles">
+    <input type="text" id="campo-busca" placeholder="🔎 Buscar arma pelo nome...">
   </div>
+
+  <main id="app" class="container-armas">
+  </main>
 
   <script src="data/game_data.js"></script>
   <script src="js/main.js"></script>

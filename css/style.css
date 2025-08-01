@@ -1,45 +1,132 @@
+/* Reset básico e Estilos Gerais do Body */
 body {
-  background-color: #222;
-  color: #eee;
+  background-color: #121212;
+  /* Um preto um pouco mais suave */
+  color: #e0e0e0;
+  /* Cor de texto clara */
   font-family: sans-serif;
-  text-align: center;
-  padding-top: 50px;
+  margin: 0;
+  /* Importante pra tirar as margens que o navegador coloca sozinho */
+  padding: 0;
 }
 
-h1 {
-  color: #61dafb;
+/* Estilo do Cabeçalho */
+header {
+  background-color: #1f1f1f;
+  /* Um cinza bem escuro pro fundo */
+  padding: 1rem 2rem;
+  /* Espaçamento interno (16px em cima/baixo, 32px dos lados) */
+  border-bottom: 1px solid #333;
+  /* Uma linha sutil pra separar do resto */
 }
 
-/* Estilos para o nosso container */
-#lista-de-armas {
+header h1 {
+  margin: 0;
+  /* Tira a margem padrão do H1 */
+  font-size: 1.5rem;
+}
+
+/* --- BARRA DE NAVEGAÇÃO DE CATEGORIAS --- */
+.menu-categorias {
   display: flex;
-  /* Transforma o container numa "bandeja flexível". */
+  /* A mágica do flexbox pra alinhar as abas lado a lado */
+  background-color: #1f1f1f;
+  padding: 0 2rem;
+  /* Alinha o padding com o do header */
+}
+
+/* Estilo de cada Aba da navegação */
+.aba {
+  color: #a0a0a0;
+  /* Um cinza para as abas que não estão selecionadas */
+  text-decoration: none;
+  /* Tira o sublinhado feio dos links */
+  padding: 1rem 1.5rem;
+  /* Espaçamento pra deixar a aba com uma área de clique boa */
+  font-weight: bold;
+  border-bottom: 3px solid transparent;
+  /* Borda de baixo fica invisível por padrão */
+  transition: all 0.2s ease-in-out;
+  /* Efeito suave quando a gente mudar algo (tipo passar o mouse) */
+}
+
+/* Efeito SHOW quando passar o mouse por cima da aba */
+.aba:hover {
+  color: #ffffff;
+  /* Texto fica branco */
+  background-color: #2a2a2a;
+  /* Fundo da aba fica um pouquinho mais claro */
+}
+
+/* Estilo especial para a Aba que estiver ATIVA */
+.aba.ativa {
+  color: #ffffff;
+  /* Texto branco pra destacar */
+  border-bottom-color: #9333ea;
+  /* A famosa bordinha roxa pra indicar qual aba está ativa! */
+}
+
+
+/* --- ESTILOS DOS CARDS --- */
+
+.container-armas {
+  display: flex;
   flex-wrap: wrap;
-  /* Permite que os cards quebrem para a linha de baixo se não couberem. */
+  gap: 16px;
+  padding: 24px;
   justify-content: center;
-  /* Centraliza os cards na bandeja. */
-  padding: 16px;
-  /* Um respiro nas laterais */
 }
 
 .card-arma {
-  background-color: #333;
-  border: 1px solid #555;
+  background-color: #2a2a2a;
+  border: 1px solid #444;
   border-radius: 8px;
   padding: 16px;
-  margin: 16px;
-  /* Margem ajustada para dar espaço em TODAS as direções. */
   width: 300px;
+  /* Largura fixa pra eles não ficarem gigantes */
+}
+
+/* --- NOVOS ESTILOS PARA O CARD COM IMAGEM --- */
+
+.card-arma {
+  /* Trocamos a largura fixa por uma mais flexível e usamos flexbox! */
+  width: 500px;
+  display: flex;
+  /* Alinha a imagem e o conteúdo lado a lado */
+  gap: 16px;
+  /* Um espaço entre a imagem e o texto */
+  align-items: flex-start;
+  /* Alinha os itens no topo do card */
   text-align: left;
-  /* Alinha o texto do card à esquerda pra ficar mais legível. */
+  /* Garante que o texto fique alinhado à esquerda */
 }
 
-.card-arma h2 {
-  margin-top: 0;
-  border-bottom: 1px solid #555;
-  padding-bottom: 10px;
+.card-imagem img {
+  width: 150px;
+  /* Largura da imagem */
+  height: auto;
+  /* Altura se ajusta pra manter a proporção */
+  object-fit: cover;
+  /* Garante que a imagem cubra o espaço sem distorcer */
+  border-radius: 4px;
+  /* Bordinha arredondada na imagem */
+  background-color: #111;
+  /* Cor de fundo caso a imagem não carregue */
 }
 
-.card-arma p {
-  margin: 8px 0;
+.card-conteudo {
+  /* Essa div vai ocupar o resto do espaço disponível */
+  flex: 1;
+}
+
+/* Pequenos ajustes de margem pra deixar o texto mais limpo */
+.card-conteudo h3,
+.card-conteudo h4,
+.card-conteudo p {
+  margin: 0 0 8px 0;
+}
+
+.card-conteudo h3 {
+  margin-top: 4px;
+  margin-bottom: 12px;
 }
