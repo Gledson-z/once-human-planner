@@ -173,3 +173,36 @@ header h1 {
   font-size: 2rem;
   cursor: pointer;
 }
+
+/* --- ESTILOS DO SLOT EQUIPADO --- */
+
+.slot.equipado {
+  /* Remove o texto "Vazio" que pode ter sobrado, e alinha tudo */
+  padding: 0.5rem;
+  /* Um padding pra imagem não colar na borda */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  border: 2px solid #9333ea;
+  /* A mesma cor roxa da aba ativa! */
+}
+
+/* Estilo para a IMAGEM dentro do slot equipado */
+.slot.equipado img {
+  max-width: 80%;
+  /* Garante que a imagem não fique gigante */
+  height: auto;
+  object-fit: contain;
+}
+
+/* Estilo para o NOME do item dentro do slot equipado */
+.slot.equipado p {
+  margin: 0;
+  font-size: 0.8rem;
+  /* Uma fonte menorzinha pro nome do item */
+  font-weight: bold;
+  text-align: center;
+  color: #fff;
+}
