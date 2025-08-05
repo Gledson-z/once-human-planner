@@ -103,7 +103,7 @@ const armaduras = [
   {
     id: 102,
     nome: "Lonewolf Mask",
-    tipo: "Máscara",
+    tipo: "Mascara",
     raridade: "Lendária",
     nivel_requerido: 40,
     imagemUrl: "https://wikily.gg/cdn-cgi/image/width=256,format=auto/https://r2.wikily.gg/images/once-human/icons/icon_armor_m_mask04_256.webp",

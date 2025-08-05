@@ -130,3 +130,46 @@ header h1 {
   margin-top: 4px;
   margin-bottom: 12px;
 }
+
+/* --- ESTILOS DO MODAL --- */
+
+.modal-overlay {
+  position: fixed;
+  /* Fica fixo na tela mesmo se rolar a página */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  /* Fundo preto semi-transparente */
+  display: flex;
+  /* Pra centralizar o conteúdo */
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  /* Garante que ele fique na frente de tudo */
+}
+
+.modal-conteudo {
+  background-color: #1f1f1f;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 900px;
+  position: relative;
+  max-height: 80vh;
+  /* Altura máxima pra não ocupar a tela toda */
+  overflow-y: auto;
+  /* Se o conteúdo for maior, cria uma barra de rolagem */
+}
+
+.modal-fechar-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 2rem;
+  cursor: pointer;
+}
