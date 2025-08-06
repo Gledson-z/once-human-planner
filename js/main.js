@@ -126,44 +126,65 @@ document.addEventListener('DOMContentLoaded', () => {
   function criarLayoutSlotsArmadura() {
     return `
         <div class="slots-grid">
-            <div class="slot-container">
+            <div class="slot-container" id="container-capacete">
                 <h4>Capacete</h4>
-                <div class="slot" id="build-slot-capacete">
-                    <p>Vazio</p>
-                </div>
+                <div class="slot" id="build-slot-capacete"><p>Vazio</p></div>
             </div>
-            <div class="slot-container">
+            <div class="slot-container" id="container-mod-capacete">
+                <h4>Mod do Capacete</h4>
+                <div class="slot" id="build-slot-capacete-mod"><p>Vazio</p></div>
+            </div>
+
+            <div class="slot-container" id="container-mascara">
                 <h4>Máscara</h4>
-                <div class="slot" id="build-slot-mascara">
-                    <p>Vazio</p>
-                </div>
+                <div class="slot" id="build-slot-mascara"><p>Vazio</p></div>
             </div>
-            <div class="slot-container">
+            <div class="slot-container" id="container-mod-mascara">
+                <h4>Mod da Máscara</h4>
+                <div class="slot" id="build-slot-mascara-mod"><p>Vazio</p></div>
+            </div>
+
+            <div class="slot-container" id="container-peitoral">
                 <h4>Peitoral</h4>
-                <div class="slot" id="build-slot-peitoral">
-                    <p>Vazio</p>
-                </div>
+                <div class="slot" id="build-slot-peitoral"><p>Vazio</p></div>
             </div>
-            <div class="slot-container">
+            <div class="slot-container" id="container-mod-peitoral">
+                <h4>Mod do Peitoral</h4>
+                <div class="slot" id="build-slot-peitoral-mod"><p>Vazio</p></div>
+            </div>
+
+            <div class="slot-container" id="container-luvas">
                 <h4>Luvas</h4>
-                <div class="slot" id="build-slot-luvas">
-                    <p>Vazio</p>
-                </div>
-                </div>
-            <div class="slot-container">
-                <h4>Calças</h4>
-                <div class="slot" id="build-slot-calcas">
-                    <p>Vazio</p>
-                    </div>
-                    </div>
-            <div class="slot-container">
-                <h4>Botas</h4>
-                <div class="slot" id="build-slot-botas">
-                    <p>Vazio</p>
-                    </div>
+                <div class="slot" id="build-slot-luvas"><p>Vazio</p></div>
             </div>
+            <div class="slot-container" id="container-mod-luvas">
+                <h4>Mod das Luvas</h4>
+                <div class="slot" id="build-slot-luvas-mod"><p>Vazio</p></div>
+            </div>
+
+            <div class="slot-container" id="container-calcas">
+                <h4>Calças</h4>
+                <div class="slot" id="build-slot-calcas"><p>Vazio</p></div>
+            </div>
+            <div class="slot-container" id="container-mod-calcas">
+                <h4>Mod das Calças</h4>
+                <div class="slot" id="build-slot-calcas-mod"><p>Vazio</p></div>
+            </div>
+
+            <div class="slot-container" id="container-botas">
+                <h4>Botas</h4>
+                <div class="slot" id="build-slot-botas"><p>Vazio</p></div>
+            </div>
+            <div class="slot-container" id="container-mod-botas">
+                <h4>Mod das Botas</h4>
+                <div class="slot" id="build-slot-botas-mod"><p>Vazio</p></div>
+            </div>
+        </div>
     `;
   }
+
+
+
   // LÓGICA DO MODAL
   function abrirModal() {
     modal.style.display = 'flex';

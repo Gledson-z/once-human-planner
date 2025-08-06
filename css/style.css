@@ -72,8 +72,8 @@ header h1 {
 .container-armas {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
-  padding: 24px;
+  gap: 1rem;
+  padding: 1.5rem;
   justify-content: center;
 }
 
@@ -93,7 +93,7 @@ header h1 {
   width: 500px;
   display: flex;
   /* Alinha a imagem e o conteúdo lado a lado */
-  gap: 16px;
+  gap: 1rem;
   /* Um espaço entre a imagem e o texto */
   align-items: flex-start;
   /* Alinha os itens no topo do card */
@@ -205,4 +205,135 @@ header h1 {
   font-weight: bold;
   text-align: center;
   color: #fff;
+}
+
+/* --- ESTILO PARA CADA SLOT INDIVIDUAL --- */
+.slot {
+  background-color: #1a1a1a;
+  /* Um preto um pouco mais claro pro fundo do slot */
+  border: 2px dashed #444;
+  /* Borda tracejada pra indicar que está vazio */
+  border-radius: 8px;
+  /* Cantos arredondados */
+  min-height: 150px;
+  /* Uma altura mínima pra ele não ficar esmagado */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #555;
+  /* Cor do texto "Vazio" */
+  font-weight: bold;
+  cursor: pointer;
+  /* O cursor vira uma "mãozinha" pra indicar que é clicável */
+  transition: all 0.2s ease;
+  /* Transição suave pra quando a gente passar o mouse */
+}
+
+/* Efeito legal quando passar o mouse por cima do slot */
+.slot:hover {
+  border-color: #9333ea;
+  /* A borda fica roxa no hover */
+  background-color: #2a2a2a;
+  color: #fff;
+}
+
+/* --- LAYOUT ESPECÍFICO DA GRADE DE ARMADURAS --- */
+
+.slots-grid {
+  display: grid;
+  max-width: 900px;
+  margin: 0 auto;
+
+  /* 
+    Grid Layout Visual Guide:
+    +-------------+---------------+
+    | capacete    | capacete-mod  |
+    | mascara     | mascara-mod   |
+    | peitoral    | peitoral-mod  |
+    | luvas       | luvas-mod     |
+    | calcas      | calcas-mod    |
+    | botas       | botas-mod     |
+    +-------------+---------------+
+  */
+  grid-template-columns: 1fr 1fr;
+  /* 2 colunas de tamanho igual */
+  grid-template-areas:
+    "capacete capacete-mod"
+    "mascara mascara-mod"
+    "peitoral peitoral-mod"
+    "luvas luvas-mod"
+    "calcas calcas-mod"
+    "botas botas-mod";
+  gap: 1.5rem 2.5rem;
+  /* Espaço vertical e horizontal */
+}
+
+@media (max-width: 600px) {
+  .slots-grid {
+    max-width: 100%;
+    grid-template-columns: 1fr;
+    /* 1 coluna em telas pequenas */
+    grid-template-areas:
+      "capacete"
+      "mascara-mod"
+      "peitoral"
+      "peitoral-mod"
+      "luvas"
+      "luvas-mod"
+      "calcas"
+      "calcas-mod"
+      "botas"
+      "botas-mod";
+    gap: 1rem;
+    /* Espaço vertical e horizontal em telas pequenas */
+  }
+}
+
+/* ATRIBUINDO CADA CONTAINER (INCLUINDO MODS) À SUA ÁREA */
+#container-capacete {
+  grid-area: capacete;
+}
+
+#container-mod-capacete {
+  grid-area: capacete-mod;
+}
+
+#container-mascara {
+  grid-area: mascara;
+}
+
+#container-mod-mascara {
+  grid-area: mascara-mod;
+}
+
+#container-peitoral {
+  grid-area: peitoral;
+}
+
+#container-mod-peitoral {
+  grid-area: peitoral-mod;
+}
+
+#container-luvas {
+  grid-area: luvas;
+}
+
+#container-mod-luvas {
+  grid-area: luvas-mod;
+}
+
+#container-calcas {
+  grid-area: calcas;
+}
+
+#container-mod-calcas {
+  grid-area: calcas-mod;
+}
+
+#container-botas {
+  grid-area: botas;
+}
+
+#container-mod-botas {
+  grid-area: botas-mod;
 }
