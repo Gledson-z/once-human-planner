@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
     container.innerHTML = ''; // Limpa o container específico
 
     if (lista.length === 0) {
-      appContainer.innerHTML = tipo === 'arma' ? '<p>Nenhuma arma encontrada com esse nome...</p>' : '<p>Nenhuma armadura cadastrada...</p>';
+      container.innerHTML = tipo === 'arma' ? '<p>Nenhum item encontrado...</p>' : '<p>Nenhum item cadastrado...</p>';
       return;
     }
 
@@ -86,10 +86,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   // RENDERIZAÇÃO INICIAL
-  // Quando a página carrega pela primeira vez, chama a função pra mostrar TODAS as armas.
-  renderizarItens(armas, 'arma');
+  setupArmaPrimariaView();
 
-  // LÓGICA DE NAVEGAÇÃO DAS ABAS
+  // LÓGICA DE NAVEGAÇÃO DAS ABAS 
   const abas = document.querySelectorAll('.menu-categorias .aba');
 
   abas.forEach(aba => {
@@ -100,23 +99,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const categoriaSelecionada = aba.textContent;
 
+      // --- ESTE É O GERENTE DE ABAS ---
+      // O trabalho dele é SÓ olhar a categoriaSelecionada
+
       if (categoriaSelecionada === 'Arma Primária') {
         campoBusca.style.display = 'block';
-        renderizarItens(armas, 'arma');
+        setupArmaPrimariaView(); // O especialista em slots de arma assume daqui
+
       } else if (categoriaSelecionada === 'Armadura') {
         campoBusca.style.display = 'none';
+        // Aqui a gente monta o cenário da armadura e ativa os slots dela
         const layoutDosSlots = criarLayoutSlotsArmadura();
         appContainer.innerHTML = layoutDosSlots;
-        const todosOsSlots = document.querySelectorAll('.slot');
-        todosOsSlots.forEach(slot => {
+        const todosOsSlotsDeArmadura = appContainer.querySelectorAll('.slot');
+
+        todosOsSlotsDeArmadura.forEach(slot => {
           slot.addEventListener('click', (event) => {
             slotAtivo = event.currentTarget;
             const tipoDoSlot = slot.id.replace('build-slot-', '');
             const tipoDoItem = tipoDoSlot.charAt(0).toUpperCase() + tipoDoSlot.slice(1);
-            abrirModalComItens(tipoDoItem);
+            abrirModalComItens(tipoDoItem, 'armadura');
           });
         });
+
       } else {
+        // Para todas as outras abas, mostramos "em construção"
         campoBusca.style.display = 'none';
         appContainer.innerHTML = `<h2>🔧 Conteúdo para "${categoriaSelecionada}" em construção! 🔧</h2>`;
       }
@@ -183,60 +190,114 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
   }
 
+  function criarLayoutSlotsArmaPrimaria() {
+    return `
+        <div class="slots-grid-arma"> <div class="slot-container" id="container-arma-primaria">
+                <h4>Arma Primária</h4>
+                <div class="slot" id="build-slot-arma-primaria"><p>Vazio</p></div>
+            </div>
 
+            <div class="slot-container" id="container-arma-mod">
+                <h4>Mod da Arma</h4>
+                <div class="slot" id="build-slot-arma-mod"><p>Vazio</p></div>
+            </div>
+
+            <div class="slot-container" id="container-arma-calibracao">
+                <h4>Calibração</h4>
+                <div class="slot" id="build-slot-arma-calibracao"><p>Vazio</p></div>
+            </div>
+
+        </div>
+    `;
+  }
 
   // LÓGICA DO MODAL
   function abrirModal() {
     modal.style.display = 'flex';
   }
-  modalBtnFechar.addEventListener('click', fecharModal);
 
   function fecharModal() {
     modal.style.display = 'none';
   }
   modalBtnFechar.addEventListener('click', fecharModal);
 
-  function abrirModalComItens(tipoDeItem) {
-    // Filtrar a lista de armaduras pra pegar só o tipo que a gente quer
-    const itensParaMostrar = armaduras.filter(item => item.tipo === tipoDeItem);
+  function abrirModalComItens(tipoDeItem, categoria) {
+    let listaDeItens = []; // Uma lista vazia pra gente decidir o que colocar
 
-    // Usar a função renderizarItens pra desenhar os cards dentro do modal
+    if (categoria === 'arma') {
+      // Se for arma, a gente filtra a lista de ARMAS
+      listaDeItens = armas.filter(item => item.tipo === tipoDeItem);
+    } else if (categoria === 'armadura') {
+      // Se for armadura, a gente filtra a lista de ARMADURAS
+      listaDeItens = armaduras.filter(item => item.tipo === tipoDeItem);
+    }
+
     const containerDoModal = document.getElementById('modal-lista-itens');
-    renderizarItens(itensParaMostrar, 'armadura', containerDoModal); // <-- Um upgrade na nossa função!
-    // Captura todos os cards que acabaram de ser criados DENTRO do modal
+
+    // Agora a gente renderiza a lista que foi preenchida
+    renderizarItens(listaDeItens, categoria, containerDoModal);
+
     const itensNoModal = modal.querySelectorAll('.item-selecionavel');
-    // Adiciona um "espião" de clique em cada um deles
+
     itensNoModal.forEach(card => {
       card.addEventListener('click', () => {
         // Pega o ID que a gente guardou no 'data-id' do card
         const itemId = parseInt(card.dataset.id);
-        // Chama a nossa função final!
-        equiparItem(itemId);
+        if (!isNaN(itemId)) {
+          // Chama a nossa função final!
+          equiparItem(itemId, categoria);
+        } else {
+          console.error('ID do item inválido:', card.dataset.id);
+        }
       });
     });
+
     // Abrir o modal
     abrirModal();
-
   }
 
-  function equiparItem(itemId) {
-    // A gente usa o .find() pra achar o objeto completo da armadura pelo id
-    const itemParaEquipar = armaduras.find(item => item.id === itemId);
+  // FUNÇÃO PARA EQUIPAR O ITEM
+  function equiparItem(itemId, categoria) {
+    let itemParaEquipar = null;
 
-    // Se a gente achou um slot ativo e um item correspondente...
+    // Lógica para decidir onde procurar o item
+    if (categoria === 'arma') {
+      itemParaEquipar = armas.find(item => item.id === itemId);
+    } else if (categoria === 'armadura') {
+      itemParaEquipar = armaduras.find(item => item.id === itemId);
+    }
+
     if (slotAtivo && itemParaEquipar) {
-
-      // Atualiza o conteúdo do slot com a imagem e o nome do item!
       slotAtivo.innerHTML = `
             <img src="${itemParaEquipar.imagemUrl}" alt="${itemParaEquipar.nome}">
             <p>${itemParaEquipar.nome}</p>
         `;
-
-      // Adiciona uma classe pra gente poder estilizar o slot preenchido depois
       slotAtivo.classList.add('equipado');
     }
 
-    fecharModal(); // Fecha o modal
+    fecharModal();
+  }
+
+  // INICIALIZA A VIEW DA ARMA PRIMÁRIA
+  function setupArmaPrimariaView() {
+    appContainer.innerHTML = criarLayoutSlotsArmaPrimaria();
+    const todosOsSlotsDeArma = appContainer.querySelectorAll('.slot');
+
+    // Lógica para adicionar o evento de clique em cada slot
+    todosOsSlotsDeArma.forEach(slot => {
+      slot.addEventListener('click', (event) => {
+        slotAtivo = event.currentTarget;
+        const slotId = slot.id;
+
+        if (slotId === 'build-slot-arma-primaria') {
+          abrirModalComItens('Fuzil de Assalto', 'arma');
+        } else if (slotId === 'build-slot-arma-mod') {
+          abrirModalComItens('Mod de Arma', 'arma');
+        } else if (slotId === 'build-slot-arma-calibracao') {
+          abrirModalComItens('Calibração', 'arma');
+        }
+      });
+    });
   }
 
 });
