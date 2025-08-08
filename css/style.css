@@ -337,3 +337,19 @@ header h1 {
 #container-mod-botas {
   grid-area: botas-mod;
 }
+
+/* --- LAYOUT DA GRADE DE ARMA PRIMÁRIA --- */
+.slots-grid-arma {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  /* 3 colunas! */
+  gap: 1.5rem;
+  /* Um espaço entre os slots */
+  max-width: 1200px;
+  /* Um limite pra não ficar muito largo */
+  margin: 0 auto;
+  /* Centraliza a grade na página */
+  padding: 2rem;
+  /* Um respiro nas laterais */
+  box-sizing: border-box;
+}
