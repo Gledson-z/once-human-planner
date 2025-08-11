@@ -89,16 +89,22 @@ header h1 {
 /* --- NOVOS ESTILOS PARA O CARD COM IMAGEM --- */
 
 .card-arma {
-  /* Trocamos a largura fixa por uma mais flexível e usamos flexbox! */
   width: 500px;
   display: flex;
-  /* Alinha a imagem e o conteúdo lado a lado */
   gap: 1rem;
-  /* Um espaço entre a imagem e o texto */
   align-items: flex-start;
-  /* Alinha os itens no topo do card */
   text-align: left;
-  /* Garante que o texto fique alinhado à esquerda */
+  transition: all 0.2s ease;
+  /* Pra efeitos futuros */
+  cursor: pointer;
+}
+
+/* Efeito de hover para os cards no modal */
+.card-arma:hover {
+  background-color: #3a3a3a;
+  /* Um pouco mais claro pra dar destaque */
+  border-color: #7a29c9;
+  /* Uma bordinha pra combinar com o resto! */
 }
 
 .card-imagem img {
@@ -352,4 +358,27 @@ header h1 {
   padding: 2rem;
   /* Um respiro nas laterais */
   box-sizing: border-box;
+}
+
+#modal-lista-itens {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  /* Espaço entre os cards */
+  padding: 1rem;
+  /* Um pequeno padding interno para não colar nas bordas do modal */
+}
+
+.modal-conteudo .card-arma {
+  width: auto;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+}
+
+.modal-conteudo .card-arma .card-imagem img {
+  max-width: 100%;
+  /* Garante que a imagem não seja maior que o card */
+  height: auto;
 }

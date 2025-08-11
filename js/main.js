@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   let slotAtivo = null;
+  let listaAtualNoModal = [];
+  let categoriaAtualNoModal = null;
 
   // CAPTURAR OS ELEMENTOS IMPORTANTES DO HTML
   const appContainer = document.getElementById('app');
@@ -69,19 +71,23 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // LÓGICA DO FILTRO DE BUSCA
-  // Adiciona um "espião" no campo de busca que dispara toda vez que você digita ou apaga algo.
   campoBusca.addEventListener('input', () => {
-    // Pega o que foi digitado e converte pra minúsculas pra não diferenciar maiúscula de minúscula
     const termoBusca = campoBusca.value.toLowerCase();
+    const containerDoModal = document.getElementById('modal-lista-itens');
 
-    // Filtra a lista ORIGINAL de armas. Ele cria uma NOVA lista (armasFiltradas)
-    // só com as armas cujo nome (em minúsculas) inclui o termo da busca.
-    const armasFiltradas = armas.filter(arma => {
-      return arma.nome.toLowerCase().includes(termoBusca);
+    // Se a busca estiver vazia, mostra a lista completa que a gente guardou
+    if (termoBusca === '') {
+      renderizarItens(listaAtualNoModal, categoriaAtualNoModal, containerDoModal);
+      return; // Para a execução aqui
+    }
+
+    // Filtra a lista que está ATUALMENTE no modal
+    const itensFiltrados = listaAtualNoModal.filter(item => {
+      return item.nome.toLowerCase().includes(termoBusca);
     });
 
-    // Manda a nova lista filtrada pra ser desenhada na tela
-    renderizarItens(armasFiltradas, 'arma');
+    // Renderiza o resultado do filtro DENTRO do modal
+    renderizarItens(itensFiltrados, categoriaAtualNoModal, containerDoModal);
   });
 
 
@@ -103,11 +109,11 @@ document.addEventListener('DOMContentLoaded', () => {
       // O trabalho dele é SÓ olhar a categoriaSelecionada
 
       if (categoriaSelecionada === 'Arma Primária') {
-        campoBusca.style.display = 'block';
+
         setupArmaPrimariaView(); // O especialista em slots de arma assume daqui
 
       } else if (categoriaSelecionada === 'Armadura') {
-        campoBusca.style.display = 'none';
+
         // Aqui a gente monta o cenário da armadura e ativa os slots dela
         const layoutDosSlots = criarLayoutSlotsArmadura();
         appContainer.innerHTML = layoutDosSlots;
@@ -221,38 +227,41 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   modalBtnFechar.addEventListener('click', fecharModal);
 
+  // VERSÃO CORRIGIDA E LIMPA
   function abrirModalComItens(tipoDeItem, categoria) {
-    let listaDeItens = []; // Uma lista vazia pra gente decidir o que colocar
+    let listaDeItens = [];
 
+    // 1. PRIMEIRO, a gente decide qual lista usar
     if (categoria === 'arma') {
-      // Se for arma, a gente filtra a lista de ARMAS
-      listaDeItens = armas.filter(item => item.tipo === tipoDeItem);
+      if (tipoDeItem === 'todos') {
+        listaDeItens = armas;
+      } else {
+        listaDeItens = armas.filter(item => item.tipo === tipoDeItem);
+      }
     } else if (categoria === 'armadura') {
-      // Se for armadura, a gente filtra a lista de ARMADURAS
       listaDeItens = armaduras.filter(item => item.tipo === tipoDeItem);
     }
 
-    const containerDoModal = document.getElementById('modal-lista-itens');
+    // 2. AGORA, a gente salva na memória
+    listaAtualNoModal = listaDeItens;
+    categoriaAtualNoModal = categoria;
 
-    // Agora a gente renderiza a lista que foi preenchida
+    // 3. RENDERIZA a lista escolhida dentro do modal
+    const containerDoModal = document.getElementById('modal-lista-itens');
     renderizarItens(listaDeItens, categoria, containerDoModal);
 
-    const itensNoModal = modal.querySelectorAll('.item-selecionavel');
-
+    // 4. DEPOIS de renderizar, a gente torna os itens clicáveis
+    const itensNoModal = containerDoModal.querySelectorAll('.item-selecionavel');
     itensNoModal.forEach(card => {
       card.addEventListener('click', () => {
-        // Pega o ID que a gente guardou no 'data-id' do card
         const itemId = parseInt(card.dataset.id);
         if (!isNaN(itemId)) {
-          // Chama a nossa função final!
           equiparItem(itemId, categoria);
-        } else {
-          console.error('ID do item inválido:', card.dataset.id);
         }
       });
     });
 
-    // Abrir o modal
+    // 5. E POR ÚLTIMO, a gente abre o modal já pronto
     abrirModal();
   }
 
@@ -290,7 +299,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const slotId = slot.id;
 
         if (slotId === 'build-slot-arma-primaria') {
-          abrirModalComItens('Fuzil de Assalto', 'arma');
+          // AQUI! Em vez de pedir um tipo específico, pedimos 'todos'!
+          abrirModalComItens('todos', 'arma');
+
         } else if (slotId === 'build-slot-arma-mod') {
           abrirModalComItens('Mod de Arma', 'arma');
         } else if (slotId === 'build-slot-arma-calibracao') {
