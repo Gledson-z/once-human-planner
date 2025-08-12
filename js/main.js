@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // FUNÇÃO PARA RENDERIZAR OS CARDS 
   function criarCardHTML(item, tipo) {
+
     if (tipo === 'arma') {
       return `
       <div class="card-arma item-selecionavel" data-id="${item.id}">
@@ -51,7 +52,30 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
     `;
+    } else if (tipo === 'calibracao') {
+
+      // Primeiro, a gente monta o HTML dos atributos
+      const atributosHTML = item.atributos.map(attr =>
+        `<p><strong>${attr.nome}:</strong> +${attr.valor_min}% - ${attr.valor_max}%</p>`
+      ).join('');
+
+      // Depois, a gente retorna o card completo
+      return `
+            <div class="card-arma item-selecionavel" data-id="${item.id}">
+                <div class="card-imagem">
+                    <img src="${item.imagemUrl}" alt="Imagem da ${item.nome}">
+                </div>
+                <div class="card-conteudo">
+                    <h3>${item.nome} (${item.raridade})</h3>
+                    <p><strong>Efeito:</strong> ${item.efeito_unico}</p>
+                    <hr>
+                    <h4>Atributos:</h4>
+                    ${atributosHTML}
+                </div>
+            </div>
+        `;
     }
+
   }
 
   function renderizarItens(lista, tipo, container = appContainer) {
@@ -113,6 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setupArmaPrimariaView(); // O especialista em slots de arma assume daqui
 
       } else if (categoriaSelecionada === 'Armadura') {
+        campoBusca.style.display = 'none';
 
         // Aqui a gente monta o cenário da armadura e ativa os slots dela
         const layoutDosSlots = criarLayoutSlotsArmadura();
@@ -139,6 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function criarLayoutSlotsArmadura() {
     return `
         <div class="slots-grid">
+            
             <div class="slot-container" id="container-capacete">
                 <h4>Capacete</h4>
                 <div class="slot" id="build-slot-capacete"><p>Vazio</p></div>
@@ -147,7 +173,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 <h4>Mod do Capacete</h4>
                 <div class="slot" id="build-slot-capacete-mod"><p>Vazio</p></div>
             </div>
-
             <div class="slot-container" id="container-mascara">
                 <h4>Máscara</h4>
                 <div class="slot" id="build-slot-mascara"><p>Vazio</p></div>
@@ -165,7 +190,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 <h4>Mod do Peitoral</h4>
                 <div class="slot" id="build-slot-peitoral-mod"><p>Vazio</p></div>
             </div>
-
             <div class="slot-container" id="container-luvas">
                 <h4>Luvas</h4>
                 <div class="slot" id="build-slot-luvas"><p>Vazio</p></div>
@@ -183,7 +207,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 <h4>Mod das Calças</h4>
                 <div class="slot" id="build-slot-calcas-mod"><p>Vazio</p></div>
             </div>
-
             <div class="slot-container" id="container-botas">
                 <h4>Botas</h4>
                 <div class="slot" id="build-slot-botas"><p>Vazio</p></div>
@@ -192,13 +215,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 <h4>Mod das Botas</h4>
                 <div class="slot" id="build-slot-botas-mod"><p>Vazio</p></div>
             </div>
+
         </div>
     `;
   }
 
   function criarLayoutSlotsArmaPrimaria() {
     return `
-        <div class="slots-grid-arma"> <div class="slot-container" id="container-arma-primaria">
+        <div class="slots-grid-arma">
+            <div class="slot-container" id="container-arma-primaria">
                 <h4>Arma Primária</h4>
                 <div class="slot" id="build-slot-arma-primaria"><p>Vazio</p></div>
             </div>
@@ -210,9 +235,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             <div class="slot-container" id="container-arma-calibracao">
                 <h4>Calibração</h4>
-                <div class="slot" id="build-slot-arma-calibracao"><p>Vazio</p></div>
+                <div class="slot" id="build-slot-arma-calibracao"><p>Vazio<p></div>
             </div>
-
         </div>
     `;
   }
@@ -227,7 +251,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   modalBtnFechar.addEventListener('click', fecharModal);
 
-  // VERSÃO CORRIGIDA E LIMPA
   function abrirModalComItens(tipoDeItem, categoria) {
     let listaDeItens = [];
 
@@ -240,6 +263,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     } else if (categoria === 'armadura') {
       listaDeItens = armaduras.filter(item => item.tipo === tipoDeItem);
+    } else if (categoria === 'calibracao') {
+      listaDeItens = calibracoes.filter(item => item.tipo === tipoDeItem);
     }
 
     // 2. AGORA, a gente salva na memória
@@ -274,6 +299,8 @@ document.addEventListener('DOMContentLoaded', () => {
       itemParaEquipar = armas.find(item => item.id === itemId);
     } else if (categoria === 'armadura') {
       itemParaEquipar = armaduras.find(item => item.id === itemId);
+    } else if (categoria === 'calibracao') {
+      itemParaEquipar = calibracoes.find(item => item.id === itemId);
     }
 
     if (slotAtivo && itemParaEquipar) {
@@ -305,7 +332,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (slotId === 'build-slot-arma-mod') {
           abrirModalComItens('Mod de Arma', 'arma');
         } else if (slotId === 'build-slot-arma-calibracao') {
-          abrirModalComItens('Calibração', 'arma');
+          abrirModalComItens('Calibração', 'calibracao');
         }
       });
     });

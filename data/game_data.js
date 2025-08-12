@@ -1,4 +1,3 @@
-// A gente cria uma "constante" chamada "armas" que vai guardar uma lista (array) de objetos.
 const armas = [
   {
     id: 1,
@@ -133,5 +132,33 @@ const armaduras = [
       resistencia_poluicao: 28,
       intensidade_psi: 64
     }
+  }
+];
+
+const calibracoes = [
+  {
+    id: 301, // ID único, começando com 300 pra calibrações
+    nome: "Heavy Style", // Nome da Calibração
+    tipo: "Calibração",
+    raridade: "Lendária",
+    efeito_unico: "Magazine Capacity +75%, Reload Speed -30%",
+    atributos: [
+      { nome: "Weakspot DMG", valor_min: 7.2, valor_max: 9.6 },
+      { nome: "Weakspot DMG", valor_min: 10.8, valor_max: 14.4 }
+    ],
+    imagemUrl: "https://wikily.gg/cdn-cgi/image/width=992,format=auto/https://r2.wikily.gg/images/once-human/icons/drawing_cbt2_icon_rifle.webp"
+  },
+
+  {
+    id: 302,
+    nome: "Energy Style",
+    tipo: "Calibração",
+    raridade: "Lendária",
+    efeito_unico: "After taking damage, automatically reload 1 bullet (cooldown: 0.3s). Attack +10%.",
+    atributos: [
+      { nome: "Elemental DMG (Blaze, Frost, Shock, Blast)", valor_min: 9.0, valor_max: 12.0 },
+      { nome: "Elemental DMG (Blaze, Frost, Shock, Blast)", valor_min: 6.0, valor_max: 8.0 }
+    ],
+    imagemUrl: "https://wikily.gg/cdn-cgi/image/width=992,format=auto/https://r2.wikily.gg/images/once-human/icons/drawing_cbt2_icon_rifle.webp"
   }
 ];

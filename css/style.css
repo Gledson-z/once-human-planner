@@ -221,8 +221,11 @@ header h1 {
   /* Borda tracejada pra indicar que está vazio */
   border-radius: 8px;
   /* Cantos arredondados */
-  min-height: 150px;
-  /* Uma altura mínima pra ele não ficar esmagado */
+
+  /* min-height: 150px; */
+
+  aspect-ratio: 1 / 1;
+  /* Mantém o slot quadrado */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -243,120 +246,27 @@ header h1 {
   color: #fff;
 }
 
-/* --- LAYOUT ESPECÍFICO DA GRADE DE ARMADURAS --- */
-
+/* --- LAYOUT DA GRADE DE ARMADURAS (4 COLUNAS) --- */
 .slots-grid {
   display: grid;
-  max-width: 900px;
+  grid-template-columns: repeat(4, 1fr);
+  /* 4 colunas */
+  gap: 2rem;
+  /* Espaço entre todos os slots */
+  max-width: 1200px;
   margin: 0 auto;
-
-  /* 
-    Grid Layout Visual Guide:
-    +-------------+---------------+
-    | capacete    | capacete-mod  |
-    | mascara     | mascara-mod   |
-    | peitoral    | peitoral-mod  |
-    | luvas       | luvas-mod     |
-    | calcas      | calcas-mod    |
-    | botas       | botas-mod     |
-    +-------------+---------------+
-  */
-  grid-template-columns: 1fr 1fr;
-  /* 2 colunas de tamanho igual */
-  grid-template-areas:
-    "capacete capacete-mod"
-    "mascara mascara-mod"
-    "peitoral peitoral-mod"
-    "luvas luvas-mod"
-    "calcas calcas-mod"
-    "botas botas-mod";
-  gap: 1.5rem 2.5rem;
-  /* Espaço vertical e horizontal */
-}
-
-@media (max-width: 600px) {
-  .slots-grid {
-    max-width: 100%;
-    grid-template-columns: 1fr;
-    /* 1 coluna em telas pequenas */
-    grid-template-areas:
-      "capacete"
-      "mascara-mod"
-      "peitoral"
-      "peitoral-mod"
-      "luvas"
-      "luvas-mod"
-      "calcas"
-      "calcas-mod"
-      "botas"
-      "botas-mod";
-    gap: 1rem;
-    /* Espaço vertical e horizontal em telas pequenas */
-  }
-}
-
-/* ATRIBUINDO CADA CONTAINER (INCLUINDO MODS) À SUA ÁREA */
-#container-capacete {
-  grid-area: capacete;
-}
-
-#container-mod-capacete {
-  grid-area: capacete-mod;
-}
-
-#container-mascara {
-  grid-area: mascara;
-}
-
-#container-mod-mascara {
-  grid-area: mascara-mod;
-}
-
-#container-peitoral {
-  grid-area: peitoral;
-}
-
-#container-mod-peitoral {
-  grid-area: peitoral-mod;
-}
-
-#container-luvas {
-  grid-area: luvas;
-}
-
-#container-mod-luvas {
-  grid-area: luvas-mod;
-}
-
-#container-calcas {
-  grid-area: calcas;
-}
-
-#container-mod-calcas {
-  grid-area: calcas-mod;
-}
-
-#container-botas {
-  grid-area: botas;
-}
-
-#container-mod-botas {
-  grid-area: botas-mod;
+  padding: 2rem;
 }
 
 /* --- LAYOUT DA GRADE DE ARMA PRIMÁRIA --- */
 .slots-grid-arma {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  /* 3 colunas! */
+  /* A ordem para criar 3 colunas! */
   gap: 1.5rem;
-  /* Um espaço entre os slots */
   max-width: 1200px;
-  /* Um limite pra não ficar muito largo */
   margin: 0 auto;
-  /* Centraliza a grade na página */
   padding: 2rem;
-  /* Um respiro nas laterais */
   box-sizing: border-box;
 }
 
@@ -381,4 +291,45 @@ header h1 {
   max-width: 100%;
   /* Garante que a imagem não seja maior que o card */
   height: auto;
+}
+
+.armor-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  /* Cria duas colunas de igual largura */
+  gap: 1rem;
+  /* Espaçamento entre as linhas */
+}
+
+.armor-row {
+  display: flex;
+  /* Coloca os itens (peça e mod) lado a lado */
+  gap: 1rem;
+  /* Espaçamento entre a peça e o mod */
+  margin-bottom: 1rem;
+  /* Espaçamento entre as "linhas" de armadura */
+}
+
+.armor-row .slot-container {
+  flex: 1;
+  /* Faz com que cada container (peça ou mod) ocupe o mesmo espaço */
+  display: flex;
+  flex-direction: column;
+}
+
+.armor-row .slot img {
+  max-width: 60%;
+  max-height: 60%;
+}
+
+/* --- ESTILO PARA OS TÍTULOS DOS SLOTS (H4) --- */
+.slot-container h4 {
+  color: #a0a0a0;
+  margin-bottom: 0.5rem;
+  /* Um espacinho entre o título e o slot */
+  min-height: 2.5em;
+  /* Garante espaço para até duas linhas de texto */
+  display: flex;
+  align-items: flex-start;
+  /* Alinha o texto no topo do espaço reservado */
 }
