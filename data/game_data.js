@@ -5,6 +5,18 @@ const armas = [
     tipo: "Fuzil de Assalto",
     raridade: "Lendária",
     tier: 5,
+    fabricante: "Beyonder",
+    efeito_especial: "Shrapnel",
+    keyword_slug: "shrapnel",
+    weapon_feature: {
+      titulo: "The Last Valour",
+      efeitos: [
+        "Hitting 4 time(s) triggers Shrapnel.",
+        "Critical hits count as 2 hit(s).",
+        "Critical hits grant +1 Shrapnel trigger times for 1s.",
+        "+30% Shrapnel Crit DMG."
+      ]
+    },
     nivel_requerido: 40,
     peso: 1.5,
     durabilidade: 100,
@@ -161,4 +173,18 @@ const calibracoes = [
     ],
     imagemUrl: "https://wikily.gg/cdn-cgi/image/width=992,format=auto/https://r2.wikily.gg/images/once-human/icons/drawing_cbt2_icon_rifle.webp"
   }
+];
+
+const keywords = [
+  {
+    slug: "shrapnel", // Um ID único em texto, sem espaços ou acentos
+    titulo: "Shrapnel",
+    descricao: "Upon hitting an enemy with a bullet, deal 50% Attack as Weapon DMG to a different random part. The element type is the same as the weapon's element. The additional damage can Crit, strike Weakspots, and will decay with distance."
+  },
+  {
+    slug: "outro-efeito-qualquer",
+    titulo: "Outro Efeito",
+    descricao: "A descrição de um outro efeito que pode existir no jogo."
+  }
+  // ... todos os outros keywords do jogo podem ser adicionados aqui
 ];

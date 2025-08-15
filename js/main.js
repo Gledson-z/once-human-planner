@@ -15,25 +15,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (tipo === 'arma') {
       return `
-      <div class="card-arma item-selecionavel" data-id="${item.id}">
-        <div class="card-imagem">
-          <img src="${item.imagemUrl}" alt="Imagem da ${item.nome}">
+        <div class="card-arma item-selecionavel" data-id="${item.id}">
+            <div class="card-imagem">
+                <img src="${item.imagemUrl}" alt="Imagem da ${item.nome}">
+            </div>
+            <div class="card-conteudo">
+                
+                <h3>${item.nome} (${item.status_base.dano} DMG)</h3>
+                
+                <p class="info-tier">
+                    <span>⭐ Tier ${item.tier}</span> | <span>${item.fabricante}</span>
+                </p>
+                
+                <p class="info-efeito">${item.efeito_especial}</p> 
+                
+                <p><strong>Crit Rate:</strong> +${item.atributos_primarios.taxa_critico}%</p>
+                <p><strong>Crit DMG:</strong> +${item.atributos_primarios.dano_critico}%</p>
+                <p><strong>Weakspot DMG:</strong> +${item.atributos_primarios.dano_ponto_fraco}%</p>
+            </div>
         </div>
-        <div class="card-conteudo">
-          <h3>${item.nome} (${item.raridade})</h3>
-          <p><strong>Tipo:</strong> ${item.tipo}</p>
-          <hr>
-          <h4>Status Base:</h4>
-          <p><strong>Dano:</strong> ${item.status_base.dano}</p>
-          <p><strong>Cadência:</strong> ${item.status_base.cadencia}</p>
-          <p><strong>Carregador:</strong> ${item.status_base.carregador} balas</p>
-          <hr>
-          <h4>Atributos Primários:</h4>
-          <p><strong>Taxa crítico:</strong> +${item.atributos_primarios.taxa_critico}%</p>
-          <p><strong>Dano Crítico:</strong> +${item.atributos_primarios.dano_critico}%</p>
-          <p><strong>Dano Ponto Fraco:</strong> +${item.atributos_primarios.dano_ponto_fraco}%</p>
-        </div>
-      </div>
     `;
     } else if (tipo === 'armadura') {
       return `
@@ -76,6 +76,62 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
     }
 
+  }
+
+  function renderizarDetalhesArma(item) {
+    const painel = document.getElementById('painel-detalhes-arma');
+
+    if (!item) {
+      painel.innerHTML = `<p class="placeholder-detalhes">Selecione uma arma para ver os detalhes...</p>`;
+      return;
+    }
+
+    // 1. Busca o keyword correspondente na lista de keywords
+    const keywordInfo = keywords.find(k => k.slug === item.keyword_slug);
+
+    // 2. Monta a lista de efeitos da "Weapon Feature"
+    const weaponFeatureHTML = item.weapon_feature.efeitos.map(efeito =>
+      `<li>${efeito}</li>`
+    ).join('');
+
+    // 3. Monta o HTML completo do painel com todas as informações
+    painel.innerHTML = `
+        <div class="detalhes-header">
+            <div>
+                <h2>${item.nome} (${item.status_base.dano} DMG)</h2>
+                <p>${item.fabricante}</p>
+            </div>
+        </div>
+        
+        <div class="detalhes-grid">
+            <div>
+                <p><strong>DMG:</strong> ${item.status_base.dano}</p>
+                <p><strong>Reload:</strong> ${item.status_base.recarga}</p>
+                <p><strong>Accuracy:</strong> ${item.status_base.precisao}</p>
+            </div>
+            <div>
+                <p><strong>Fire Rate:</strong> ${item.status_base.cadencia}</p>
+                <p><strong>Magazine:</strong> ${item.status_base.carregador}</p>
+                <p><strong>Stability:</strong> ${item.status_base.estabilidade}</p>
+            </div>
+            <div>
+                <h4>Equipment Stats</h4>
+                <p><strong>Durability:</strong> ${item.durabilidade}</p>
+                <p><strong>Weight:</strong> ${item.peso}</p>
+                <p><strong>Required Level:</strong> ${item.nivel_requerido}</p>
+            </div>
+        </div>
+        
+        <hr>
+        <h4>Weapon Feature: ${item.weapon_feature.titulo}</h4>
+        <ul>${weaponFeatureHTML}</ul>
+        
+        ${keywordInfo ? `
+            <hr>
+            <h4>Keyword: ${keywordInfo.titulo}</h4>
+            <p>${keywordInfo.descricao}</p>
+        ` : ''}
+    `;
   }
 
   function renderizarItens(lista, tipo, container = appContainer) {
@@ -235,8 +291,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             <div class="slot-container" id="container-arma-calibracao">
                 <h4>Calibração</h4>
-                <div class="slot" id="build-slot-arma-calibracao"><p>Vazio<p></div>
+                <div class="slot" id="build-slot-arma-calibracao"><p>Vazio</p></div>
             </div>
+        </div>
+
+        <div id="painel-detalhes-arma" class="painel-detalhes">
+            <p class="placeholder-detalhes">Selecione uma arma para ver os detalhes completos...</p>
         </div>
     `;
   }
@@ -309,6 +369,9 @@ document.addEventListener('DOMContentLoaded', () => {
             <p>${itemParaEquipar.nome}</p>
         `;
       slotAtivo.classList.add('equipado');
+    }
+    if (categoria === 'arma') {
+      renderizarDetalhesArma(itemParaEquipar);
     }
 
     fecharModal();

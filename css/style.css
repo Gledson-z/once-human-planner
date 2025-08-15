@@ -93,7 +93,6 @@ header h1 {
   display: flex;
   gap: 1rem;
   align-items: flex-start;
-  text-align: left;
   transition: all 0.2s ease;
   /* Pra efeitos futuros */
   cursor: pointer;
@@ -283,7 +282,7 @@ header h1 {
   width: auto;
   flex-direction: column;
   align-items: center;
-  text-align: center;
+  text-align: left;
 
 }
 
@@ -332,4 +331,99 @@ header h1 {
   display: flex;
   align-items: flex-start;
   /* Alinha o texto no topo do espaço reservado */
+}
+
+/* --- ESTILOS PARA O CARD DE ARMA --- */
+
+/* Ajustando o título para ficar mais destacado */
+.card-conteudo h3 {
+  color: #f0e68c;
+  /* Um amarelo "dourado", cor de item lendário */
+  font-size: 1.3rem;
+  margin-bottom: 0.75rem;
+}
+
+/* Estilo para a linha do Tier e Fabricante */
+.card-conteudo .info-tier {
+  font-size: 0.9rem;
+  color: #ccc;
+  margin-bottom: 0.5rem;
+}
+
+.card-conteudo .info-tier span {
+  margin-right: 0.5rem;
+  /* Um espacinho entre os spans */
+}
+
+/* Estilo para a linha do Efeito Especial */
+.card-conteudo .info-efeito {
+  font-style: italic;
+  color: #a0a0a0;
+  margin-bottom: 1rem;
+}
+
+/* Ajustando os parágrafos de atributos */
+.card-conteudo p {
+  margin: 0 0 0.5rem 0;
+  /* Um pouco menos de espaço entre eles */
+}
+
+/* --- ESTILOS DO PAINEL DE DETALHES DA ARMA --- */
+
+/* Estilo do cabeçalho com imagem e nome */
+.detalhes-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #444;
+  padding-bottom: 1rem;
+}
+
+.detalhes-imagem-arma {
+  width: 80px;
+  /* Um tamanho fixo para a imagem da arma */
+  height: auto;
+  background-color: #111;
+  border-radius: 4px;
+}
+
+.detalhes-header h2 {
+  margin: 0;
+  color: #f0e68c;
+  /* Dourado para combinar com o card */
+  font-size: 1.5rem;
+}
+
+.detalhes-header p {
+  margin: 0;
+  color: #a0a0a0;
+  font-size: 1rem;
+}
+
+/* A grade principal para os atributos */
+.detalhes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  /* Colunas responsivas */
+  gap: 1rem 2rem;
+  /* Espaço vertical e horizontal */
+  margin-bottom: 1.5rem;
+}
+
+.painel-detalhes h4 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: #ccc;
+  font-size: 1.1rem;
+}
+
+.painel-detalhes p {
+  margin: 0 0 0.5rem 0;
+  color: #e0e0e0;
+}
+
+.painel-detalhes ul {
+  padding-left: 20px;
+  margin: 0;
 }
