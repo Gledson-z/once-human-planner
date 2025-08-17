@@ -1,6 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   let slotAtivo = null;
+  let buildArmaPrimaria = {
+    arma: null,
+    mod: null,
+    calibracao: null
+  };
   let listaAtualNoModal = [];
   let categoriaAtualNoModal = null;
 
@@ -74,64 +79,102 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             </div>
         `;
+    } else if (tipo === 'mod') {
+      return `
+        <div class="card-arma item-selecionavel" data-id="${item.id}">
+            <div class="card-imagem">
+                <img src="${item.imagemUrl}" alt="Imagem de ${item.nome}">
+            </div>
+            <div class="card-conteudo">
+                <h3>${item.nome} (${item.raridade})</h3>
+                <p><strong>Efeito:</strong> ${item.efeito_especial}</p>
+            </div>
+        </div>
+    `;
     }
 
   }
 
-  function renderizarDetalhesArma(item) {
+  function renderizarDetalhesArma(itemArma) {
     const painel = document.getElementById('painel-detalhes-arma');
 
-    if (!item) {
+    if (!itemArma) {
       painel.innerHTML = `<p class="placeholder-detalhes">Selecione uma arma para ver os detalhes...</p>`;
       return;
     }
 
-    // 1. Busca o keyword correspondente na lista de keywords
-    const keywordInfo = keywords.find(k => k.slug === item.keyword_slug);
+    const keywordInfo = keywords.find(k => k.slug === itemArma.keyword_slug);
 
-    // 2. Monta a lista de efeitos da "Weapon Feature"
-    const weaponFeatureHTML = item.weapon_feature.efeitos.map(efeito =>
-      `<li>${efeito}</li>`
-    ).join('');
+    // só vai tentar montar o HTML da "Weapon Feature" SE ela existir no item
+    let weaponFeatureHTML = ''; // Começa como uma string vazia
+    if (itemArma.weapon_feature && itemArma.weapon_feature.efeitos) {
+      const listaDeEfeitos = itemArma.weapon_feature.efeitos.map(efeito =>
+        `<li>${efeito}</li>`
+      ).join('');
 
-    // 3. Monta o HTML completo do painel com todas as informações
-    painel.innerHTML = `
+      weaponFeatureHTML = `
+            <hr>
+            <h4>Weapon Feature: ${itemArma.weapon_feature.titulo}</h4>
+            <ul>${listaDeEfeitos}</ul>
+        `;
+    }
+
+    let htmlCompleto = `
         <div class="detalhes-header">
             <div>
-                <h2>${item.nome} (${item.status_base.dano} DMG)</h2>
-                <p>${item.fabricante}</p>
+                <h2>${itemArma.nome} (${itemArma.status_base.dano} DMG)</h2>
+                <p>${itemArma.fabricante}</p>
             </div>
         </div>
-        
         <div class="detalhes-grid">
             <div>
-                <p><strong>DMG:</strong> ${item.status_base.dano}</p>
-                <p><strong>Reload:</strong> ${item.status_base.recarga}</p>
-                <p><strong>Accuracy:</strong> ${item.status_base.precisao}</p>
+                <p><strong>DMG:</strong> ${itemArma.status_base.dano}</p>
+                <p><strong>Reload:</strong> ${itemArma.status_base.recarga}</p>
+                <p><strong>Accuracy:</strong> ${itemArma.status_base.precisao}</p>
             </div>
             <div>
-                <p><strong>Fire Rate:</strong> ${item.status_base.cadencia}</p>
-                <p><strong>Magazine:</strong> ${item.status_base.carregador}</p>
-                <p><strong>Stability:</strong> ${item.status_base.estabilidade}</p>
+                <p><strong>Fire Rate:</strong> ${itemArma.status_base.cadencia}</p>
+                <p><strong>Magazine:</strong> ${itemArma.status_base.carregador}</p>
+                <p><strong>Stability:</strong> ${itemArma.status_base.estabilidade}</p>
             </div>
             <div>
                 <h4>Equipment Stats</h4>
-                <p><strong>Durability:</strong> ${item.durabilidade}</p>
-                <p><strong>Weight:</strong> ${item.peso}</p>
-                <p><strong>Required Level:</strong> ${item.nivel_requerido}</p>
+                <p><strong>Durability:</strong> ${itemArma.durabilidade}</p>
+                <p><strong>Weight:</strong> ${itemArma.peso}</p>
+                <p><strong>Required Level:</strong> ${itemArma.nivel_requerido}</p>
             </div>
         </div>
-        
-        <hr>
-        <h4>Weapon Feature: ${item.weapon_feature.titulo}</h4>
-        <ul>${weaponFeatureHTML}</ul>
-        
-        ${keywordInfo ? `
-            <hr>
-            <h4>Keyword: ${keywordInfo.titulo}</h4>
-            <p>${keywordInfo.descricao}</p>
-        ` : ''}
+        ${weaponFeatureHTML}
+        ${keywordInfo ? `<hr><h4>Keyword: ${keywordInfo.titulo}</h4><p>${keywordInfo.descricao}</p>` : ''}
     `;
+
+    // ADICIONA o HTML do mod, se ele existir.
+    if (buildArmaPrimaria.mod) {
+      const itemMod = buildArmaPrimaria.mod;
+      htmlCompleto += `
+            <hr>
+            <h4>Weapon Mod: ${itemMod.nome}</h4>
+            <p>${itemMod.efeito_especial}</p> 
+        `;
+    }
+
+    // ADICIONA o HTML da calibração, se ela existir.
+    if (buildArmaPrimaria.calibracao) {
+      const itemCalibracao = buildArmaPrimaria.calibracao;
+      const atributosCalibracaoHTML = itemCalibracao.atributos.map(attr =>
+        `<p><strong>${attr.nome}:</strong> +${attr.valor_min}% - ${attr.valor_max}%</p>`
+      ).join('');
+
+      htmlCompleto += `
+            <hr>
+            <h4>Calibration: ${itemCalibracao.nome}</h4>
+            <p>${itemCalibracao.efeito_unico}</p>
+            ${atributosCalibracaoHTML}
+        `;
+    }
+
+    // renderiza a string completa na tela.
+    painel.innerHTML = htmlCompleto;
   }
 
   function renderizarItens(lista, tipo, container = appContainer) {
@@ -325,6 +368,8 @@ document.addEventListener('DOMContentLoaded', () => {
       listaDeItens = armaduras.filter(item => item.tipo === tipoDeItem);
     } else if (categoria === 'calibracao') {
       listaDeItens = calibracoes.filter(item => item.tipo === tipoDeItem);
+    } else if (categoria === 'mod') {
+      listaDeItens = mods.filter(item => item.tipo === tipoDeItem);
     }
 
     // 2. AGORA, a gente salva na memória
@@ -354,24 +399,38 @@ document.addEventListener('DOMContentLoaded', () => {
   function equiparItem(itemId, categoria) {
     let itemParaEquipar = null;
 
-    // Lógica para decidir onde procurar o item
     if (categoria === 'arma') {
       itemParaEquipar = armas.find(item => item.id === itemId);
     } else if (categoria === 'armadura') {
       itemParaEquipar = armaduras.find(item => item.id === itemId);
     } else if (categoria === 'calibracao') {
       itemParaEquipar = calibracoes.find(item => item.id === itemId);
+    } else if (categoria === 'mod') {
+      itemParaEquipar = mods.find(item => item.id === itemId);
     }
 
+    // A gente só faz o resto se o slot e o item existirem
     if (slotAtivo && itemParaEquipar) {
+      // Aqui a gente desenha o item dentro do slot clicado
       slotAtivo.innerHTML = `
             <img src="${itemParaEquipar.imagemUrl}" alt="${itemParaEquipar.nome}">
             <p>${itemParaEquipar.nome}</p>
         `;
       slotAtivo.classList.add('equipado');
-    }
-    if (categoria === 'arma') {
-      renderizarDetalhesArma(itemParaEquipar);
+      // Atualiza o nosso "inventário"
+      const slotId = slotAtivo.id;
+      if (slotId === 'build-slot-arma-primaria') {
+        buildArmaPrimaria.arma = itemParaEquipar;
+      } else if (slotId === 'build-slot-arma-mod') {
+        buildArmaPrimaria.mod = itemParaEquipar;
+      } else if (slotId === 'build-slot-arma-calibracao') {
+        buildArmaPrimaria.calibracao = itemParaEquipar;
+      }
+
+      // Atualiza o painel de detalhes se for um item da aba de armas
+      if (categoria === 'arma' || categoria === 'calibracao' || categoria === 'mod') {
+        renderizarDetalhesArma(buildArmaPrimaria.arma);
+      }
     }
 
     fecharModal();
@@ -393,7 +452,7 @@ document.addEventListener('DOMContentLoaded', () => {
           abrirModalComItens('todos', 'arma');
 
         } else if (slotId === 'build-slot-arma-mod') {
-          abrirModalComItens('Mod de Arma', 'arma');
+          abrirModalComItens('Mod de Arma', 'mod');
         } else if (slotId === 'build-slot-arma-calibracao') {
           abrirModalComItens('Calibração', 'calibracao');
         }

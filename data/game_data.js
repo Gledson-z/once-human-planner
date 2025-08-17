@@ -188,3 +188,14 @@ const keywords = [
   }
   // ... todos os outros keywords do jogo podem ser adicionados aqui
 ];
+
+const mods = [
+  {
+    id: 401, // Um ID novo, começando com 400 pra mods
+    nome: "Shrapnel Smash",
+    tipo: "Mod de Arma", // <-- O tipo EXATO que o main.js vai procurar
+    raridade: "lendária",
+    efeito_especial: "Triggering Shrapnel grants Shrapnel Crit Rate +2% for 2s. Effect can stack up to 15 time(s).",
+    imagemUrl: "https://wikily.gg/cdn-cgi/image/width=992,format=auto/https://r2.wikily.gg/images/once-human/icons/icon_mods_cbt2_sdbjtsrdjd_d.webp"
+  }
+];
