@@ -252,6 +252,9 @@ document.addEventListener('DOMContentLoaded', () => {
           });
         });
 
+      } else if (categoriaSelecionada === 'Cradles') {
+        appContainer.innerHTML = criarLayoutCradles();
+
       } else {
         // Para todas as outras abas, mostramos "em construção"
         campoBusca.style.display = 'none';
@@ -458,6 +461,29 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
     });
+  }
+
+  function criarLayoutCradles() {
+    let slotsHTML = ''; // Começa uma string vazia para os slots
+
+    // Loop que roda 8 vezes para criar os 8 slots
+    for (let i = 1; i <= 8; i++) {
+      slotsHTML += `
+            <div class="cradle-slot-container">
+                <div class="slot-circular" id="build-slot-cradle-${i}"></div>
+                <p>Slot ${i}</p>
+            </div>
+        `;
+    }
+
+    // Retorna o HTML completo da view
+    return `
+        <div class="cradles-view">
+            <h2>Cradle Slots</h2>
+            <p class="view-subtitle">Select cradles to enhance your build's capabilities</p>
+            <div class="cradle-slots-grid">${slotsHTML}</div>
+        </div>
+    `;
   }
 
 });
