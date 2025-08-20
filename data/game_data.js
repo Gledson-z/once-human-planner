@@ -199,3 +199,20 @@ const mods = [
     imagemUrl: "https://wikily.gg/cdn-cgi/image/width=992,format=auto/https://r2.wikily.gg/images/once-human/icons/icon_mods_cbt2_sdbjtsrdjd_d.webp"
   }
 ];
+
+const cradles = [
+  {
+    id: 601, // Nova sequência de IDs para Cradles
+    nome: "Elemental Sense",
+    tipo: "Cradle",
+    descricao: "After dealing Elemental DMG, the corresponding Element's DMG +25% for 4s.",
+    imagemUrl: "https://wikily.gg/cdn-cgi/image/width=96,format=auto/https://r2.wikily.gg/images/once-human/icons/meme_cbt2_icon_skill_yscn.webp"
+  },
+  {
+    id: 602,
+    nome: "Explosive Barrage",
+    tipo: "Cradle",
+    descricao: "Shrapnel DMG +0.2% for each part hit by Shrapnel, capping at +0.6%",
+    imagemUrl: "https://wikily.gg/cdn-cgi/image/width=96,format=auto/https://r2.wikily.gg/images/once-human/icons/meme_cbt2_icon_skill_sdshts.webp"
+  }
+];

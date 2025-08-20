@@ -462,9 +462,26 @@ header h1 {
   margin-bottom: 0.5rem;
   cursor: pointer;
   transition: all 0.2s ease;
+  display: flex;
+  /* Adicione isso */
+  flex-direction: column;
+  /* Opcional: se o texto "Slot X" voltar a aparecer dentro */
+  align-items: center;
+  /* Centraliza horizontalmente */
+  justify-content: center;
+  /* Centraliza verticalmente */
+  text-align: center;
+  /* Garante que o texto embaixo fique centralizado */
 }
 
 .slot-circular:hover {
   border-color: #9333ea;
   background-color: #2a2a2a;
+}
+
+.slot-circular img {
+  max-width: 100%;
+  /* Ajuste conforme necessário */
+  max-height: 100%;
+  /* Ajuste conforme necessário */
 }

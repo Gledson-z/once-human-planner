@@ -91,6 +91,19 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         </div>
     `;
+    } else if (tipo === 'cradle') {
+      return `
+        <div class="card-arma item-selecionavel" data-id="${item.id}">
+            <div class="card-imagem">
+                <img src="${item.imagemUrl}" alt="Imagem de ${item.nome}">
+            </div>
+            <div class="card-conteudo">
+                <h3>${item.nome}</h3>
+                <p><strong>Tipo:</strong> ${item.tipo}</p>
+                <p>${item.descricao}</p>
+            </div>
+        </div>
+    `;
     }
 
   }
@@ -254,6 +267,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
       } else if (categoriaSelecionada === 'Cradles') {
         appContainer.innerHTML = criarLayoutCradles();
+        const todosOsSlotsDeCradle = appContainer.querySelectorAll('.slot-circular');
+        todosOsSlotsDeCradle.forEach(slot => {
+          slot.addEventListener('click', (event) => {
+            slotAtivo = event.currentTarget;
+            // O tipo é sempre 'Cradle' e a categoria é 'cradle'
+            abrirModalComItens('Cradle', 'cradle');
+          });
+        });
 
       } else {
         // Para todas as outras abas, mostramos "em construção"
@@ -373,6 +394,8 @@ document.addEventListener('DOMContentLoaded', () => {
       listaDeItens = calibracoes.filter(item => item.tipo === tipoDeItem);
     } else if (categoria === 'mod') {
       listaDeItens = mods.filter(item => item.tipo === tipoDeItem);
+    } else if (categoria === 'cradle') {
+      listaDeItens = cradles; // Pega todos os cradles, sem filtro de tipo
     }
 
     // 2. AGORA, a gente salva na memória
@@ -410,6 +433,8 @@ document.addEventListener('DOMContentLoaded', () => {
       itemParaEquipar = calibracoes.find(item => item.id === itemId);
     } else if (categoria === 'mod') {
       itemParaEquipar = mods.find(item => item.id === itemId);
+    } else if (categoria === 'cradle') {
+      itemParaEquipar = cradles.find(item => item.id === itemId);
     }
 
     // A gente só faz o resto se o slot e o item existirem
@@ -417,7 +442,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Aqui a gente desenha o item dentro do slot clicado
       slotAtivo.innerHTML = `
             <img src="${itemParaEquipar.imagemUrl}" alt="${itemParaEquipar.nome}">
-            <p>${itemParaEquipar.nome}</p>
+            
         `;
       slotAtivo.classList.add('equipado');
       // Atualiza o nosso "inventário"
