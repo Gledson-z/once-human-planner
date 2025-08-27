@@ -196,10 +196,11 @@ header h1 {
 
 /* Estilo para a IMAGEM dentro do slot equipado */
 .slot.equipado img {
-  max-width: 80%;
-  /* Garante que a imagem não fique gigante */
-  height: auto;
+  width: 206px;
+  /* Um tamanho fixo e compacto para o ícone */
+  height: 100px;
   object-fit: contain;
+  /* Garante que a imagem caiba sem distorcer */
 }
 
 /* Estilo para o NOME do item dentro do slot equipado */
@@ -215,26 +216,18 @@ header h1 {
 /* --- ESTILO PARA CADA SLOT INDIVIDUAL --- */
 .slot {
   background-color: #1a1a1a;
-  /* Um preto um pouco mais claro pro fundo do slot */
-  border: 2px dashed #444;
-  /* Borda tracejada pra indicar que está vazio */
+  border: 2px solid #2f2f2f;
+  /* Trocando pra sólida e mais sutil */
   border-radius: 8px;
-  /* Cantos arredondados */
-
-  /* min-height: 150px; */
-
-  aspect-ratio: 1 / 1;
-  /* Mantém o slot quadrado */
+  min-height: 100px;
+  /* Uma altura mínima mais compacta */
   display: flex;
   justify-content: center;
   align-items: center;
   color: #555;
-  /* Cor do texto "Vazio" */
   font-weight: bold;
   cursor: pointer;
-  /* O cursor vira uma "mãozinha" pra indicar que é clicável */
   transition: all 0.2s ease;
-  /* Transição suave pra quando a gente passar o mouse */
 }
 
 /* Efeito legal quando passar o mouse por cima do slot */
@@ -250,8 +243,10 @@ header h1 {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   /* 4 colunas */
-  gap: 2rem;
-  /* Espaço entre todos os slots */
+  row-gap: 2.5rem;
+  /* Espaço (vertical) entre as linhas de cima e de baixo */
+  column-gap: 1rem;
+  /* Espaço (horizontal) MENOR entre as colunas */
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
@@ -484,4 +479,69 @@ header h1 {
   /* Ajuste conforme necessário */
   max-height: 100%;
   /* Ajuste conforme necessário */
+}
+
+/* --- ESTILOS REFINADOS PARA O CARD DE ARMADURA --- */
+
+/* Estilo para a TAG de raridade */
+.card-conteudo .raridade-card {
+  display: inline-block;
+  /* Permite colocar padding e margem */
+  padding: 0.2rem 0.5rem;
+  font-size: 0.8rem;
+  font-weight: bold;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.raridade-lendária {
+  background-color: #ff8000;
+  /* Laranja/Dourado */
+  color: #121212;
+}
+
+.raridade-épica {
+  background-color: #a335ee;
+  /* Roxo */
+  color: #fff;
+}
+
+.raridade-rara {
+  background-color: #0070dd;
+  /* Azul */
+  color: #fff;
+}
+
+/* Adicione outras cores para outras raridades se precisar! */
+
+
+/* Ajuste no título do item */
+.card-conteudo h3 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  color: #fff;
+  /* Trocando o dourado pra branco pra não brigar com a tag */
+}
+
+/* Ajuste na linha do TIER e FABRICANTE */
+.card-conteudo .info-tier {
+  margin-bottom: 1rem;
+  /* Mais espaço depois dessa linha */
+}
+
+/* Container dos atributos */
+.atributos-container {
+  border-top: 1px solid #444;
+  /* Linha divisória */
+  padding-top: 1rem;
+}
+
+/* Estilo para cada linha de atributo */
+.card-conteudo .info-atributo {
+  display: flex;
+  justify-content: space-between;
+  /* Alinha o nome na esquerda e o valor na direita */
+  font-size: 0.9rem;
+  color: #ccc;
+  margin-bottom: 0.5rem;
 }

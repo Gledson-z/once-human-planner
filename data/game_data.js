@@ -96,55 +96,99 @@ const armas = [
 const armaduras = [
   {
     id: 101,
-    nome: "Gas-tight Helmet",
+    nome: "Treacherous Tides Helmet",
     tipo: "Capacete",
-    raridade: "Lendária",
-    nivel_requerido: 40,
-    imagemUrl: "https://wikily.gg/cdn-cgi/image/width=256,format=auto/https://r2.wikily.gg/images/once-human/icons/icon_armor_m_cap34_256.webp",
-    status_base: {
-      durabilidade: 400,
-      peso: 0.3
-    },
+    raridade: "Lendária", // Com 'L' maiúsculo para combinar com a imagem
+    tier: 5,
+    fabricante: "Juggernaut",
+    imagemUrl: "https://wikily.gg/cdn-cgi/image/width=992,format=auto/https://r2.wikily.gg/images/once-human/icons/icon_v4_equip_blueprint_m_cap26_v2.webp",
     atributos_primarios: {
-      vida_maxima: 590,
-      resistencia_poluicao: 21,
-      intensidade_psi: 92
-    }
+      vida_maxima: 590, // HP
+      resistencia_poluicao: 21, // Pollution Resist
+      intensidade_psi: 92 // Psi Intensity
+    },
+    durabilidade: 400 // Durability
   },
+
   {
     id: 102,
     nome: "Lonewolf Mask",
     tipo: "Mascara",
     raridade: "Lendária",
-    nivel_requerido: 40,
-    imagemUrl: "https://wikily.gg/cdn-cgi/image/width=256,format=auto/https://r2.wikily.gg/images/once-human/icons/icon_armor_m_mask04_256.webp",
-    status_base: {
-      durabilidade: 400,
-      peso: 0.3
-    },
+    tier: 5,
+    fabricante: "Juggernaut",
+    imagemUrl: "https://wikily.gg/cdn-cgi/image/width=992,format=auto/https://r2.wikily.gg/images/once-human/icons/icon_v4_equip_blueprint_m_mask04.webp",
     atributos_primarios: {
-      vida_maxima: 295,
-      resistencia_poluicao: 28,
-      intensidade_psi: 115
-    }
+      vida_maxima: 295, // HP
+      resistencia_poluicao: 28, // Pollution Resist
+      intensidade_psi: 115 // Psi Intensity
+    },
+    durabilidade: 400 // Durability
   },
+
   {
     id: 103,
     nome: "Treacherous Tides Top",
     tipo: "Peitoral",
     raridade: "Lendária",
-    nivel_requerido: 40,
-    imagemUrl: "https://wikily.gg/cdn-cgi/image/width=256,format=auto/https://r2.wikily.gg/images/once-human/icons/icon_armor_m_coat29_v2_a_256.webp",
-    status_base: {
-      durabilidade: 400,
-      peso: 0.2
-    },
+    tier: 5,
+    fabricante: "Juggernaut",
+    imagemUrl: "https://wikily.gg/cdn-cgi/image/width=992,format=auto/https://r2.wikily.gg/images/once-human/icons/icon_v4_equip_blueprint_m_coat29_v2.webp",
     atributos_primarios: {
-      vida_maxima: 1534,
-      resistencia_poluicao: 28,
-      intensidade_psi: 64
-    }
-  }
+      vida_maxima: 1534, // HP
+      resistencia_poluicao: 28, // Pollution Resist
+      intensidade_psi: 64 // Psi Intensity
+    },
+    durabilidade: 400 // Durability
+  },
+
+  {
+    id: 104,
+    nome: "Treacherous Tides Pants",
+    tipo: "Calcas",
+    raridade: "Lendária",
+    tier: 5,
+    fabricante: "Juggernaut",
+    imagemUrl: "https://wikily.gg/cdn-cgi/image/width=992,format=auto/https://r2.wikily.gg/images/once-human/icons/icon_v4_equip_blueprint_m_pants24_v2.webp",
+    atributos_primarios: {
+      vida_maxima: 1416, // HP
+      resistencia_poluicao: 21, // Pollution Resist
+      intensidade_psi: 74 // Psi Intensity
+    },
+    durabilidade: 400 // Durability
+  },
+
+  {
+    id: 105,
+    nome: "Treacherous Tides Shoes",
+    tipo: "Botas",
+    raridade: "Lendária",
+    tier: 5,
+    fabricante: "Juggernaut",
+    imagemUrl: "https://wikily.gg/cdn-cgi/image/width=992,format=auto/https://r2.wikily.gg/images/once-human/icons/icon_v4_equip_blueprint_m_shoes17_v2.webp",
+    atributos_primarios: {
+      vida_maxima: 1180, // HP
+      resistencia_poluicao: 21, // Pollution Resist
+      intensidade_psi: 46 // Psi Intensity
+    },
+    durabilidade: 400 // Durability
+  },
+
+  {
+    id: 106,
+    nome: "Lonewolf Gloves",
+    tipo: "Luvas",
+    raridade: "Lendária",
+    tier: 5,
+    fabricante: "Juggernaut",
+    imagemUrl: "https://wikily.gg/cdn-cgi/image/width=992,format=auto/https://r2.wikily.gg/images/once-human/icons/icon_v4_equip_blueprint_m_glove23.webp",
+    atributos_primarios: {
+      vida_maxima: 885, // HP
+      resistencia_poluicao: 21, // Pollution Resist
+      intensidade_psi: 69 // Psi Intensity
+    },
+    durabilidade: 400 // Durability
+  },
 ];
 
 const calibracoes = [

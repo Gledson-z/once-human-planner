@@ -42,20 +42,25 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
     } else if (tipo === 'armadura') {
       return `
-      <div class="card-arma item-selecionavel" data-id="${item.id}">
-        <div class="card-imagem">
-          <img src="${item.imagemUrl}" alt="Imagem da ${item.nome}">
+        <div class="card-arma item-selecionavel" data-id="${item.id}">
+            <div class="card-imagem">
+                <img src="${item.imagemUrl}" alt="Imagem da ${item.nome}">
+            </div>
+            <div class="card-conteudo">
+                <span class="raridade-card raridade-${item.raridade.toLowerCase()}">${item.raridade}</span>
+                <h3>${item.nome}</h3>
+                <p class="info-tier">
+                    <span>⭐ Tier ${item.tier}</span> | <span>${item.fabricante}</span>
+                </p>
+                
+                <div class="atributos-container">
+                    <p class="info-atributo">HP: +${item.atributos_primarios.vida_maxima}</p>
+                    <p class="info-atributo">Pollution Resist: +${item.atributos_primarios.resistencia_poluicao}</p>
+                    <p class="info-atributo">Psi Intensity: +${item.atributos_primarios.intensidade_psi}</p>
+                    <p class="info-atributo">Durability: ${item.durabilidade}</p>
+                </div>
+            </div>
         </div>
-        <div class="card-conteudo">
-          <h3>${item.nome} (${item.raridade})</h3>
-          <p><strong>Tipo:</strong> ${item.tipo}</p>
-          <hr>
-          <h4>Atributos:</h4>
-          <p><strong>HP:</strong> +${item.atributos_primarios.vida_maxima}</p>
-          <p><strong>Resistência à Poluição:</strong> +${item.atributos_primarios.resistencia_poluicao}</p>
-          <p><strong>Intensidade Psi:</strong> +${item.atributos_primarios.intensidade_psi}</p>
-        </div>
-      </div>
     `;
     } else if (tipo === 'calibracao') {
 
