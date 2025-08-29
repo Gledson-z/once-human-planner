@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     mod: null,
     calibracao: null
   };
+  let buildCradles = {};
   let listaAtualNoModal = [];
   let categoriaAtualNoModal = null;
 
@@ -18,6 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // FUNÇÃO PARA RENDERIZAR OS CARDS 
   function criarCardHTML(item, tipo) {
 
+    // Dentro da sua função criarCardHTML...
+
     if (tipo === 'arma') {
       return `
         <div class="card-arma item-selecionavel" data-id="${item.id}">
@@ -25,18 +28,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 <img src="${item.imagemUrl}" alt="Imagem da ${item.nome}">
             </div>
             <div class="card-conteudo">
-                
-                <h3>${item.nome} (${item.status_base.dano} DMG)</h3>
-                
+                <span class="raridade-card raridade-${item.raridade.toLowerCase()}">${item.raridade}</span>
+                <h3>${item.nome}</h3>
                 <p class="info-tier">
                     <span>⭐ Tier ${item.tier}</span> | <span>${item.fabricante}</span>
                 </p>
                 
-                <p class="info-efeito">${item.efeito_especial}</p> 
-                
-                <p><strong>Crit Rate:</strong> +${item.atributos_primarios.taxa_critico}%</p>
-                <p><strong>Crit DMG:</strong> +${item.atributos_primarios.dano_critico}%</p>
-                <p><strong>Weakspot DMG:</strong> +${item.atributos_primarios.dano_ponto_fraco}%</p>
+                <div class="atributos-container">
+                    <p class="info-atributo"><span>DMG</span> <span>${item.status_base.dano}</span></p>
+                    <p class="info-atributo"><span>Crit Rate</span> <span>+${item.atributos_primarios.taxa_critico}%</span></p>
+                    <p class="info-atributo"><span>Crit DMG</span> <span>+${item.atributos_primarios.dano_critico}%</span></p>
+                    <p class="info-atributo"><span>Weakspot DMG</span> <span>+${item.atributos_primarios.dano_ponto_fraco}%</span></p>
+                </div>
             </div>
         </div>
     `;
@@ -452,7 +455,9 @@ document.addEventListener('DOMContentLoaded', () => {
       slotAtivo.classList.add('equipado');
       // Atualiza o nosso "inventário"
       const slotId = slotAtivo.id;
-      if (slotId === 'build-slot-arma-primaria') {
+      if (slotId.startsWith('build-slot-cradle-')) {
+        buildCradles[slotId] = itemParaEquipar;
+      } else if (slotId === 'build-slot-arma-primaria') {
         buildArmaPrimaria.arma = itemParaEquipar;
       } else if (slotId === 'build-slot-arma-mod') {
         buildArmaPrimaria.mod = itemParaEquipar;
@@ -463,6 +468,9 @@ document.addEventListener('DOMContentLoaded', () => {
       // Atualiza o painel de detalhes se for um item da aba de armas
       if (categoria === 'arma' || categoria === 'calibracao' || categoria === 'mod') {
         renderizarDetalhesArma(buildArmaPrimaria.arma);
+      }
+      if (categoria === 'cradle') {
+        renderizarEfeitosCradle();
       }
     }
 
@@ -512,6 +520,38 @@ document.addEventListener('DOMContentLoaded', () => {
             <h2>Cradle Slots</h2>
             <p class="view-subtitle">Select cradles to enhance your build's capabilities</p>
             <div class="cradle-slots-grid">${slotsHTML}</div>
+        
+            <div id="cradle-effects-container">
+                </div>
+        </div>
+    `;
+  }
+
+  function renderizarEfeitosCradle() {
+    const container = document.getElementById('cradle-effects-container');
+
+    // Pega só os itens que estão dentro do nosso objeto de inventário
+    const cradlesEquipados = Object.values(buildCradles);
+
+    // Se não tiver nenhum cradle equipado, a gente limpa a área e para por aqui
+    if (cradlesEquipados.length === 0) {
+      container.innerHTML = '';
+      return;
+    }
+
+    // Se tiver itens, a gente monta o HTML
+    container.innerHTML = `
+        <h3 class="effects-title">Cradle Effects</h3>
+        <div class="effects-grid">
+            ${cradlesEquipados.map(item => `
+                <div class="effect-card">
+                    <img src="${item.imagemUrl}" alt="${item.nome}">
+                    <div class="effect-card-content">
+                      <h4>${item.nome}</h4>
+                      <p>${item.descricao}</p>
+                    </div>
+                </div>
+            `).join('')}
         </div>
     `;
   }

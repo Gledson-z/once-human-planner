@@ -545,3 +545,61 @@ header h1 {
   color: #ccc;
   margin-bottom: 0.5rem;
 }
+
+/* --- ESTILOS DO PAINEL DE EFEITOS (CRADLES) --- */
+
+#cradle-effects-container {
+  margin-top: 3rem;
+  /* Um bom espaço para separar dos slots */
+  border-top: 1px solid #444;
+  /* Uma linha divisória */
+  padding-top: 2rem;
+}
+
+.effects-title {
+  font-size: 1.5rem;
+  color: #ccc;
+  margin-bottom: 1.5rem;
+}
+
+.effects-grid {
+  display: grid;
+  /* Cria colunas responsivas, ideal para os cards */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.effect-card {
+  background-color: #1a1a1a;
+  border: 1px solid #2f2f2f;
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  /* Alinha o ícone e o texto lado a lado */
+  align-items: flex-start;
+  /* Alinha no topo */
+  gap: 1rem;
+  /* Espaço entre o ícone e o texto */
+}
+
+.effect-card img {
+  width: 50px;
+  /* Tamanho fixo para o ícone do cradle */
+  height: 50px;
+  background-color: #111;
+  border-radius: 4px;
+}
+
+.effect-card-content h4 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  color: #fff;
+}
+
+.effect-card-content p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #a0a0a0;
+  line-height: 1.4;
+  /* Melhora a legibilidade do texto de descrição */
+}
