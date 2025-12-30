@@ -107,7 +107,7 @@ const armaduras = [
       resistencia_poluicao: 21, // Pollution Resist
       intensidade_psi: 92 // Psi Intensity
     },
-    durabilidade: 400 // Durability
+    durabilidade: 400 
   },
 
   {
@@ -123,7 +123,7 @@ const armaduras = [
       resistencia_poluicao: 28, // Pollution Resist
       intensidade_psi: 115 // Psi Intensity
     },
-    durabilidade: 400 // Durability
+    durabilidade: 400 // 
   },
 
   {
@@ -139,7 +139,7 @@ const armaduras = [
       resistencia_poluicao: 28, // Pollution Resist
       intensidade_psi: 64 // Psi Intensity
     },
-    durabilidade: 400 // Durability
+    durabilidade: 400 // 
   },
 
   {
@@ -155,7 +155,7 @@ const armaduras = [
       resistencia_poluicao: 21, // Pollution Resist
       intensidade_psi: 74 // Psi Intensity
     },
-    durabilidade: 400 // Durability
+    durabilidade: 400 //
   },
 
   {
@@ -171,7 +171,7 @@ const armaduras = [
       resistencia_poluicao: 21, // Pollution Resist
       intensidade_psi: 46 // Psi Intensity
     },
-    durabilidade: 400 // Durability
+    durabilidade: 400 // 
   },
 
   {
@@ -187,7 +187,7 @@ const armaduras = [
       resistencia_poluicao: 21, // Pollution Resist
       intensidade_psi: 69 // Psi Intensity
     },
-    durabilidade: 400 // Durability
+    durabilidade: 400 //
   },
 ];
 
